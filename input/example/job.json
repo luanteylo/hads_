@@ -1,0 +1,43 @@
+{
+    "job_id": 12,
+    "job_name": "Checkpoint Test",
+    "description": "A job with three task",
+    "tasks": {
+        "0": {
+            "memory": 10.060959,
+            "io": 0.0,
+            "command": "sh exec.sh 400",
+            "runtime": {
+                "c3.xlarge": 167.0,
+                "c3.large": 167.0,
+                "c4.large": 168.0,
+                "c4.xlarge": 168.0,
+                "t3.xlarge": 119.0
+            }
+        },
+        "1": {
+            "memory": 10.060959,
+            "io": 0.0,
+            "command": "sh exec.sh 400",
+            "runtime": {
+                "c3.xlarge": 167.0,
+                "c3.large": 167.0,
+                "c4.large": 168.0,
+                "c4.xlarge": 168.0,
+                "t3.xlarge": 119.0
+            }
+        },
+        "2": {
+            "memory": 10.060959,
+            "io": 0.0,
+            "command": "sh exec.sh 400",
+            "runtime": {
+                "c3.xlarge": 167.0,
+                "c3.large": 167.0,
+                "c4.large": 168.0,
+                "c4.xlarge": 168.0,
+                "t3.xlarge": 119.0
+            }
+        }
+    }
+}

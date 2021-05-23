@@ -1,0 +1,124 @@
+#
+# s3fs - FUSE-based file system backed by Amazon S3
+#
+# Copyright(C) 2007 Randy Rizun <rrizun@gmail.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      cache: apt
+      before_install:
+        - sudo apt-get update -qq
+        - sudo apt-get install -qq attr cppcheck libfuse-dev openjdk-7-jdk
+        - sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+        - sudo pip install --upgrade awscli
+      script:
+        - ./autogen.sh
+        - ./configure CPPFLAGS='-I/usr/local/opt/openssl/include' CXXFLAGS='-std=c++03 -DS3FS_PTHREAD_ERRORCHECK=1'
+        - make
+        - make cppcheck
+        - make check -C src
+        - modprobe fuse
+        - travis_wait 30 make check -C test
+        - test/search_filter-suite-log.sh test/test-suite.log
+
+    - os: osx
+      osx_image: xcode9.2
+      cache:
+        directories:
+          - $HOME/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+          - $HOME/.osx_cache
+      before_cache:
+        - brew cleanup
+        - cd /usr/local/Homebrew; find . \! -regex ".+\.git.+" -delete
+        - mkdir -p $HOME/.osx_cache; touch $HOME/.osx_cache/cached
+      before_install:
+        - TAPS="$(brew --repository)/Library/Taps";
+          if [ -e "$TAPS/caskroom/homebrew-cask" ]; then
+            rm -rf "$TAPS/caskroom/homebrew-cask";
+          fi;
+          if [ ! -f $HOME/.osx_cache/cached ]; then
+            brew tap homebrew/homebrew-cask;
+          else
+            HOMEBREW_NO_AUTO_UPDATE=1 brew tap homebrew/homebrew-cask;
+          fi
+        - HOMEBREW_NO_AUTO_UPDATE=1 brew cask install osxfuse
+        - S3FS_BREW_PACKAGES='awscli cppcheck truncate';
+          for s3fs_brew_pkg in ${S3FS_BREW_PACKAGES}; do
+            brew list | grep -q ${s3fs_brew_pkg};
+            if [ $? -eq 0 ]; then
+              brew outdated | grep -q ${s3fs_brew_pkg} && HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade ${s3fs_brew_pkg};
+            else
+              HOMEBREW_NO_AUTO_UPDATE=1 brew install ${s3fs_brew_pkg};
+            fi;
+          done
+        - if [ -f /Library/Filesystems/osxfusefs.fs/Support/load_osxfusefs ]; then
+            sudo chmod +s /Library/Filesystems/osxfusefs.fs/Support/load_osxfusefs;
+          elif [ -f /Library/Filesystems/osxfuse.fs/Contents/Resources/load_osxfuse ]; then
+            sudo chmod +s /Library/Filesystems/osxfuse.fs/Contents/Resources/load_osxfuse;
+          else
+            exit 1;
+          fi
+        - sudo ln -s /usr/local/opt/coreutils/bin/gstdbuf /usr/local/bin/stdbuf
+      script:
+        - ./autogen.sh
+        - PKG_CONFIG_PATH=/usr/local/opt/curl/lib/pkgconfig:/usr/local/opt/openssl/lib/pkgconfig ./configure CXXFLAGS='-std=c++03 -DS3FS_PTHREAD_ERRORCHECK=1'
+        - make
+        - make cppcheck
+        - make check -C src
+        - if [ -f /Library/Filesystems/osxfusefs.fs/Support/load_osxfusefs ]; then
+            /Library/Filesystems/osxfusefs.fs/Support/load_osxfusefs;
+          elif [ -f /Library/Filesystems/osxfuse.fs/Contents/Resources/load_osxfuse ]; then
+            /Library/Filesystems/osxfuse.fs/Contents/Resources/load_osxfuse;
+          else
+            exit 1;
+          fi
+        - travis_wait 30 make check -C test
+        - test/search_filter-suite-log.sh test/test-suite.log
+
+    - os: linux-ppc64le
+      dist: trusty
+      cache: apt
+      before_install:
+        - sudo add-apt-repository -y ppa:openjdk-r/ppa
+        - sudo apt-get update -qq
+        - sudo apt-get install -qq attr cppcheck libfuse-dev openjdk-7-jdk
+        - sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-ppc64el/jre/bin/java
+        - sudo pip install --upgrade awscli
+      script:
+        - ./autogen.sh
+        - ./configure CPPFLAGS='-I/usr/local/opt/openssl/include' CXXFLAGS='-std=c++03 -DS3FS_PTHREAD_ERRORCHECK=1'
+        - make
+        - make cppcheck
+        - make check -C src
+        - modprobe fuse
+        - travis_wait 30 make check -C test
+        - test/search_filter-suite-log.sh test/test-suite.log
+
+#
+# Local variables:
+# tab-width: 4
+# c-basic-offset: 4
+# End:
+# vim600: noet sw=4 ts=4 fdm=marker
+# vim<600: noet sw=4 ts=4
+#

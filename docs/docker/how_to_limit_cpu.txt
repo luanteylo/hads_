@@ -1,0 +1,5 @@
+docker create --cpu-period=50000 --cpu-quota=25000 --name container_103_0_1 -v /home/ubuntu/s3/103_0/1/data/:/home/control/ -w /home/control/ synthetic sh exec.sh 11000 300
+
+
+
+docker create --cpu-period=50000 --cpu-quota=25000 --name container_103_0_1 -v /home/ubunt'u/s3/103_0/1/data/:/home/control/ -w /home/control/ synthetic sh exec.sh 11000 300
