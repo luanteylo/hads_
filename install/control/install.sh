@@ -13,7 +13,7 @@ AWS_ACCESS_PWD=
 #NOTIFY_PWD=luanteylo@gmail.com
 
 # database password 
-db_pwd=
+db_pwd=luan1110
 
 
 #uid=1000
@@ -39,8 +39,8 @@ pip3 install -r $SOURCE_PATH/requirements.txt
 
 # install database
 mkdir -p ~/docker/volumes/postgres
-docker run -e POSTGRES_PASSWORD=$db_pwd -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data --name pg-docker postgres -N 1500  -B 4096MB
-cat $SOURCE_PATH/install/control/clean_db.sql | docker exec -i pg-docker psql -U postgres
+docker run -e POSTGRES_PASSWORD=$db_pwd -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data --name pg-docker test -N 1500  -B 4096MB
+#cat $SOURCE_PATH/install/control/clean_db.sql | docker exec -i pg-docker psql -U postgres
 
 
 # creating aws config file
