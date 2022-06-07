@@ -12,9 +12,9 @@
                     }
                 }
             },
-            "market": "preemptible",
+            "market": "on-demand",
             "price": 0.0294,
-            "type": "c3.large"
+            "type": "t2.micro"
         },
         "id55c148bb-cbbb-418e-bff2-020801d03b5c": {
             "map": {
@@ -25,9 +25,9 @@
                     }
                 }
             },
-            "market": "preemptible",
+            "market": "on-demand",
             "price": 0.0294,
-            "type": "c3.large"
+            "type": "t2.micro"
         },
         "idb8db0b16-dd17-4758-9eea-40836eaac9d2": {
             "map": {
@@ -38,12 +38,12 @@
                     }
                 }
             },
-            "market": "preemptible",
+            "market": "on-demand",
             "price": 0.0294,
-            "type": "c3.large"
+            "type": "t2.micro"
         }
     },
     "job_id": 12,
-    "job_name": "Checkpoint Test",
+    "job_name": "Test",
     "scheduler": "ipdps"
 }
