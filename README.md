@@ -1,18 +1,26 @@
 # HADS and Burst-HADS
 
+[__COE__]
 
 This repository contains all files related to the Hibernation Dynamic Scheduler (HADS) and the Burst-Hibernation Dynamic Scheduler (Burst-HADS).
 
 We are writing documentation that includes an Installation Guide and a First Steps Tutorial. It will be published very soon.
 
-<br>
-
 ## TODO:
 - [ ] Remove not used branches from the public repository
 - [ ] Merge branches at the master one
 - [ ] Write the README.rst
-- [ ] Write the Instalation Guide
+- [x] Write the Instalation Guide
 - [x] Include the list of published papers at README
+
+## Installation Guide
+
+This installation guide describes a verified process for Linux environment.
+
+You must have Docker installed and running as well as Python 3.
+
+1. The first step is to execute `install.sh` script in `install/control/`. First, update `SOURCE_PATH` variable inside it with the full path to the `hads_` project;
+2. If all goes well, test if client is working in the `hads/` source repo: `python clienty.py --help`.
 
 
 ## Published Papers
