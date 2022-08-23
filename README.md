@@ -1,7 +1,5 @@
 # HADS and Burst-HADS
 
-[_TOC_]
-
 This repository contains all files related to the Hibernation-Aware Dynamic Scheduler (HADS)
 
 - [ ] Remove not used branches from the public repository
