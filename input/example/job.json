@@ -12,7 +12,8 @@
                 "c3.large": 167.0,
                 "c4.large": 168.0,
                 "c4.xlarge": 168.0,
-                "t3.xlarge": 119.0
+                "t3.xlarge": 119.0,
+                "t2.micro": 100.0
             }
         },
         "1": {
@@ -24,7 +25,8 @@
                 "c3.large": 167.0,
                 "c4.large": 168.0,
                 "c4.xlarge": 168.0,
-                "t3.xlarge": 119.0
+                "t3.xlarge": 119.0,
+                "t2.micro": 100.0
             }
         },
         "2": {
@@ -36,7 +38,8 @@
                 "c3.large": 167.0,
                 "c4.large": 168.0,
                 "c4.xlarge": 168.0,
-                "t3.xlarge": 119.0
+                "t3.xlarge": 119.0,
+                "t2.micro": 100.0
             }
         }
     }
