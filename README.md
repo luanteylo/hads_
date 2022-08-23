@@ -1,10 +1,6 @@
 # HADS and Burst-HADS
 
-[__COE__]
-
 This repository contains all files related to the Hibernation-Aware Dynamic Scheduler (HADS)
-
-
 
 ## Installation Guide
 
@@ -28,7 +24,14 @@ The controller is responsabel for all the management of the virtual machines in 
 2. If all goes well, test if client is working in the `hads/` source repo: `python clienty.py --help`.
 
 
+#### AWS permissions and setup
 
+It is necessary to have the following AWS permissions and setup:
+
+1. AWS CLI
+2. AWS Access Key and Secret id (usually stored in ~/.aws/credentials
+3. EC2 creation and deletion permissions
+4. pricing:GetProducts
 
 ## Published Papers
 -   Teylo, L.; Arantes, L.; Sens, P.; Drummond, L. A Hibernation Aware Dynamic Scheduler for Cloud Environments. _15th International Workshop on Scheduling and Resource Management for Parallel and Distributed Systems_, ICPP, 2019.
