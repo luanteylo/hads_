@@ -2,12 +2,6 @@
 
 This repository contains all files related to the Hibernation-Aware Dynamic Scheduler (HADS)
 
-- [ ] Remove not used branches from the public repository
-- [ ] Merge branches at the master one
-- [ ] Write the README.rst
-- [x] Write the Instalation Guide
-- [x] Include the list of published papers at README
-
 ## Installation Guide
 
 This installation guide describes a verified process for Linux environment (Ubuntu 20.04 LTS). All instructions reported here are based on this system. Number versions are provided as an indication of the versions that were tested and used in this project. 
