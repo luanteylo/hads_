@@ -24,6 +24,8 @@ The controller is responsabel for all the management of the virtual machines in 
 2. If all goes well, test if client is working in the `hads/` source repo: `python clienty.py --help`.
 
 
+#### AWS permissions and setup
+
 It is necessary to have the following AWS permissions and setup:
 
 1. AWS CLI
