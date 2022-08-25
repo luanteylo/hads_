@@ -8,7 +8,7 @@ This repository contains all files related to the Hibernation-Aware Dynamic Sche
 
 ## Installation Guide
 
-This installation guide describes a verified process for Linux environment (Ubuntu 20.04 LTS). All instructions reported here are based on this system. Number versions are provided as an indication of the versions that were tested and used in this project. 
+This installation guide describes a verified process for Linux environment (Ubuntu 20.04 LTS) and MACOS. All instructions reported here are based on this system. Number versions are provided as an indication of the versions that were tested and used in this project. 
 
 
 You must have Docker installed and running as well as Python 3.
