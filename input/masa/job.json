@@ -1,0 +1,17 @@
+{
+    "job_id": 1,
+    "job_name": "Masa Test",
+    "description": "A job with one task of the masa-openmp application",
+    "tasks": {
+        "0": {
+            "memory": 10.060959,
+            "io": 0.0,
+            "command": "sh exec.sh fasta/sequence.fasta fasta/sequence2.fasta output.txt",
+            "runtime": {
+                "c4.large": 168.0,
+                "c4.xlarge": 70.0
+            }
+        }
+    }
+}
+

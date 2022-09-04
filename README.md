@@ -4,7 +4,7 @@ This repository contains all files related to the Hibernation-Aware Dynamic Sche
 
 ## Installation Guide
 
-This installation guide describes a verified process for Linux environment (Ubuntu 20.04 LTS) and MACOS. All instructions reported here are based on this system. Number versions are provided as an indication of the versions that were tested and used in this project. 
+This installation guide describes a verified process for the Linux environment (Ubuntu 20.04 LTS) and MACOS. All instructions reported here are based on this system. The number of versions is provided as an indication of the versions that were tested and used in this project. 
 
 
 You must have Docker installed and running as well as Python 3.
@@ -12,22 +12,22 @@ You must have Docker installed and running as well as Python 3.
 - Docker (v20.10.17)
 - Python 3 (v3.9)
 
-:warning: Currently HADS only supports the services of AWS. All the instalation steps related to the cloud is based on this provider.
+:warning: Currently, HADS only supports the services of AWS. All the installation steps related to the cloud are based on this provider.
 
 
 ### Installing the controller
 
-The controller is responsabel for all the management of the virtual machines in the cloud: it request machines, deploy the tasks and terminate the environment. Before install the control, you need to generate a Identity and Access Management (IAM) 
+The controller is responsible for all the management of the virtual machines in the cloud: it requests machines, deploys the tasks and terminates the environment. Before installing the control, you need to generate an Identity and Access Management (IAM) 
 
 1. Execute the script `install.sh`  in `install/control/`. First, update `SOURCE_PATH` variable inside it with the full path to the `hads_` project;
 
-2. If all goes well, test if client is working in the `hads/` source repo: `python clienty.py --help`.
+2. If all goes well, test if the client is working in the `hads_/` source repo: `python clienty.py --help`.
 
 ### Environment variables
 
 To execute the controller, it is necessary to define the following environment variables:
 
-* The full path to the controler
+* The full path to the controller
     * `HADS_PATH=/home/hads_ `
 * The path and the file name where the setup file is
     * `SETUP_PATH=/home/hads_/`
@@ -40,7 +40,7 @@ To execute the controller, it is necessary to define the following environment v
 
 ### AWS setup
 
-After setup controller, it is necessary to define the permissions in AWS and create an AMI used to execute the tasks.
+After setup the controller, it is necessary to define the permissions in AWS and create an AMI used to execute the tasks.
 
 
 #### AWS permissions and setup
@@ -95,7 +95,7 @@ key_file = <file.pem>
 
 By default, HADS uses an S3 bucket to keep all files related to the programs and all output files. Therefore, it is necessary to create a bucket in S3.
 
-In S3, select the create bucket buttom. Then, defines the bucket name and create the bucket (the default bucket setup is enough for HADS).
+In S3, select the create bucket button. Then, defines the bucket name and create the bucket (the default bucket setup is enough for HADS).
 
 The name of the created bucket needs to be included in the `setup.cfg` file in the tag:
 
@@ -135,20 +135,29 @@ After the script is finished, it is necessary to restart the VM
 sudo reboot -h 0
 ```
 
-Now, you need to create a docker image that will be used to execute the application. As an example, for the next steps, we will consider a synthetic application available in `bin/example/`.
 
-To prepare a docker image able to execute that application,  use the DockerFile available in `install/ami/synthetic`. In that folder, you can create an image called "synthetic" executing the following command:
+Now, you need to create a docker image that will be used to execute the application. As an example, for the next steps, we will consider two applications: i) a synthetic application available in `bin/example`; and ii) masa-openmp, available in `bin/masa/`.
+
+To prepare a docker image able to execute these applications,  use the DockerFiles available in `install/ami/synthetic` and `install/ami/masa`. 
 
 ```bash
+cd `ami/synthetic/`
 docker build -t synthetic .
 ```
 
-The name of the created docker image needs to be included in the `setup.cfg` file in the tag:
+```bash
+cd `ami/masa/`
+docker build -t masa .
+```
+
+These commands will create two distinct images called, respectively, synthetic and masa.  Note that, to execute one of that applications, you need to provide THE RIGHT name of the created docker image, according to the application you want to execute, in the `setup.cfg` file in the tag:
 
 ```
 [docker]
-docker_image = synthetic
+docker_image = synthetic or masa
 ```
+
+Attention: if you try to execute an application using the wrong image, the task will return the "runtime_error" code. A good way to avoid that mistake is by creating only one docker image able to execute all applications you need, avoiding the necessity of changing the `setup.cfg` for each application.
 
 
 Now, we can finally create the AMI by saving the VM state:
@@ -166,17 +175,21 @@ Note that, the created image has an AMI ID (available even before the end of the
 [ec2]
 image_id = 	<ami-id>
 
-:warining: Do not forget to terminate the VM when the image is finally created.
+:warning: Do not forget to terminate the VM when the image is finally created.
 
 
-## HANDS ON: Running the synthetic application
+## Running the synthetic application
 
 After all the installation steps, we can check if HADS can execute applications in the cloud by testing the execution of the synthetic application available in `bin/example/`
 
 
-The default `setup.cfg` is already setup to execute the syntehtic application. Otherwise, the following tags need to be defined:
+The default `setup.cfg` is already set up to execute the synthetic application. Otherwise, the following tags need to be defined:
 
 ```
+[docker]
+docker_image = synthetic
+
+
 [input]
 path = $HADS_PATH/input/example/
 job_file = job.json
@@ -196,7 +209,7 @@ The following command will execute the synthetic application in the cloud:
 python client.py control
 ```
 
-That application is composed of 3 tasks (bin/0, bin/1 and bin/2). Each task is executed using three on-demand t2.micro (see input/example/map.json).
+That application comprises 3 tasks (bin/0, bin/1 and bin/2). Each task is executed using three on-demand t2.micro (see input/example/map.json).
 
 To check if the application was executed with success, you can see the output files in S3. To do that, go to S3 and check the bucket. You will see a folder `12_0` created in the bucket. In this folder, you have the following inner folders: 12_0/0/, 12_0/1 and 12_0/2. Each one of these folders represents one task. Inside them, you will see the `output.txt` file in the `data/` folder.
 
@@ -222,6 +235,40 @@ elapsed time: 13.0504s
 finished computation at Sun Sep  4 12:21:39 2022
 elapsed time: 26.5618s
 ```
+
+
+## Running MASA
+
+To execute MASA the following tags need to be defined:
+
+```
+[docker]
+docker_image = masa
+
+[input]
+path = $HADS_PATH/input/masa/
+job_file = job.json
+env_file = env.json
+map_file = map.json
+deadline_seconds = 200
+ac_size_seconds = 30
+idle_slack_time = 60
+
+[application]
+app_local_path = $HADS_PATH/bin/masa/
+```
+
+The following command will execute the masa application in the cloud:
+
+```bash
+python client.py control
+```
+
+That application is composed of 1 task (bin/0). The task is executed using a c4.large spot VM (see input/masa/map.json).
+
+To check if the application was executed with success, you can see the output files in S3. To do that, go to S3 and check the bucket. You will see a folder `1_0` created in the bucket. In this folder, you have the following inner folder: 1_0/0/. This folder represents one task, and inside it, you will see the `output.txt` file in the `data/` folder.
+
+
 
 
 # TODO:

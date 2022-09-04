@@ -1,0 +1,23 @@
+{
+    "deadline": 2700,
+    "expected_cost": 0.002764777777777778,
+    "expected_makespan": 167.0,
+    "instances": {
+        "id6081f9c1-255a-4d61-80b7-45a3588d3fc8": {
+            "map": {
+                "vcpu_0": {
+                    "0": {
+                        "end": 357.0,
+                        "start": 0.0
+                    }
+                }
+            },
+            "market": "preemptible",
+            "price": 0.1664,
+            "type": "c4.large"
+        }
+    },
+    "job_id": 1,
+    "job_name": "Masa Test",
+    "scheduler": "ipdps"
+}
