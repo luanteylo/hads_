@@ -174,8 +174,64 @@ image_id = 	<ami-id>
 After all the installation steps, we can check if HADS can execute applications in the cloud by testing the execution of the synthetic application available in `bin/example/`
 
 
+The default `setup.cfg` is already setup to execute the syntehtic application. Otherwise, the following tags need to be defined:
+
+```
+[input]
+path = $HADS_PATH/input/example/
+job_file = job.json
+env_file = env.json
+map_file = map.json
+deadline_seconds = 200
+ac_size_seconds = 30
+idle_slack_time = 60
+
+[application]
+app_local_path = $HADS_PATH/bin/example/
+```
+
+The following command will execute the synthetic application in the cloud:
+
+```bash
+python client.py control
+```
+
+That application is composed of 3 tasks (bin/0, bin/1 and bin/2). Each task is executed using three on-demand t2.micro (see input/example/map.json).
+
+To check if the application was executed with success, you can see the output files in S3. To do that, go to S3 and check the bucket. You will see a folder `12_0` created in the bucket. In this folder, you have the following inner folders: 12_0/0/, 12_0/1 and 12_0/2. Each one of these folders represents one task. Inside them, you will see the `output.txt` file in the `data/` folder.
+
+If the synthetic application went well, the output file should look like this:
+
+```
+############################################
+SIZE: 400
+NUM_ITERATIONS: 2
+ALPHA: 500
+TETA: 10000
+IO_SIZE: 1
+STEP: 3
+
+Mem Size kB:		21248
+Mem Heap kB:		1320
+INT: 0
+finished computation at Sun Sep  4 12:21:26 2022
+elapsed time: 13.1418s
+INT: 1
+finished computation at Sun Sep  4 12:21:39 2022
+elapsed time: 13.0504s
+finished computation at Sun Sep  4 12:21:39 2022
+elapsed time: 26.5618s
+```
 
 
+# TODO:
+
+Explain:
+
+1. The .json files
+2. The tasks structures in bin/ 
+3. The folder structure in the bucket
+4. The database structure (There are lot of things in the database)
 
 
 ## Published Papers
