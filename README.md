@@ -52,7 +52,7 @@ It is necessary to have the following AWS permissions and setup:
 3. EC2 creation and deletion permissions
 4. pricing:GetProducts
 
-#### Secury group
+#### security group
 
 It is also necessary to create a security group that will allow HADS to access the VMs via ssh
 
