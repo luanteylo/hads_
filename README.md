@@ -172,8 +172,10 @@ That process takes several minutes! You can check the status of the image in "im
 
 Note that, the created image has an AMI ID (available even before the end of the image creation). The AMI ID of the image needs to be included in the `setup.cfg` file in the tag:
 
+```
 [ec2]
 image_id = 	<ami-id>
+```
 
 :warning: Do not forget to terminate the VM when the image is finally created.
 
