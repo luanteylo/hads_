@@ -48,11 +48,11 @@ After setup the controller, it is necessary to define the permissions in AWS and
 It is necessary to have the following AWS permissions and setup:
 
 1. AWS CLI
-2. AWS Access Key and Secret id (usually stored in ~/.aws/credentials
+2. AWS Access Key and Secret id (usually stored in ~/.aws/credentials)
 3. EC2 creation and deletion permissions
 4. pricing:GetProducts
 
-#### security group
+#### Security group
 
 It is also necessary to create a security group that will allow HADS to access the VMs via ssh
 
