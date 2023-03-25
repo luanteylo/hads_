@@ -124,24 +124,24 @@ class Executor:
                     return
 
                 # update memory usage
-                if usage is not None and 'memory' in usage:
-                    current_mem = self.__to_megabyte(usage['memory'])
-                    current_cpu_str = usage['cpu']
+                #if usage is not None and 'memory' in usage:
+                    #current_mem = self.__to_megabyte(usage['memory'])
+                    #current_cpu_str = usage['cpu']
 
-                    current_cpu = 0.0
+                    #current_cpu = 0.0
 
-                    if current_cpu_str.find("%") != -1:
-                        current_cpu = float(current_cpu_str.replace('%', ''))
+                    #if current_cpu_str.find("%") != -1:
+                    #    current_cpu = float(current_cpu_str.replace('%', ''))
 
                     # repo = PostgresRepo()
-                    self.repo.add_task_statistic(TaskStatisticRepo(
-                        execution_id=self.loader.execution_id,
-                        job_id=self.loader.job.job_id,
-                        task_id=self.task.task_id,
-                        timestamp=datetime.now(),
-                        cpu_usage=current_cpu,
-                        memory_usage=current_mem
-                    ))
+                    #self.repo.add_task_statistic(TaskStatisticRepo(
+                    #    execution_id=self.loader.execution_id,
+                    #    job_id=self.loader.job.job_id,
+                    #    task_id=self.task.task_id,
+                    #    timestamp=datetime.now(),
+                    #    cpu_usage=current_cpu,
+                    #    memory_usage=current_mem
+                    #))
                     # repo.close_session()
 
                 if docker_status is not None and docker_status == 'exited':
