@@ -48,11 +48,11 @@ After setup the controller, it is necessary to define the permissions in AWS and
 It is necessary to have the following AWS permissions and setup:
 
 1. AWS CLI
-2. AWS Access Key and Secret id (usually stored in ~/.aws/credentials
+2. AWS Access Key and Secret id (usually stored in ~/.aws/credentials)
 3. EC2 creation and deletion permissions
 4. pricing:GetProducts
 
-#### security group
+#### Security group
 
 It is also necessary to create a security group that will allow HADS to access the VMs via ssh
 
@@ -178,6 +178,14 @@ image_id = 	<ami-id>
 ```
 
 :warning: Do not forget to terminate the VM when the image is finally created.
+
+### Small guidance on how to copy files into the EC2 VM
+
+One way of executing the AMI script in the VM is by using ssh. For that, you will be required to be able to ssh into the machine.
+
+1. [Check prerequisites for connecting to your instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html#connection-prereqs-private-key): make sure to know the type of VM launched so you can use the correct user in the commands
+2. [Access your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
+3. For copying the files in `install/ami`, you can use a command like [scp](https://www.cybrosys.com/blog/copying-multiple-files-simultaneously-using-scp#:~:text=To%20copy%20files%20from%20a,Linux%2C%20Windows%2C%20and%20Mac.) 
 
 
 ## Running the synthetic application
